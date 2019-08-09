@@ -13,7 +13,7 @@ public class PropagateObject {
 	/**
 	 * @brief Apply initial orbit perturbation based on error matrix
 	 * 
-	 * This method pertrubes the passed in value based on the passed in error.
+	 * This method perturbs the passed in value based on the passed in error.
 	 * Currently, it simply picks a random value between +error and -error and
 	 * adds that to the value which it then returns
 	 * 
@@ -21,7 +21,7 @@ public class PropagateObject {
 	 * in error is the std deviation of a normal distribution
 	 * 
 	 * @param value The value to be modified
-	 * @param error The error value used to determing the scale of the perturbation
+	 * @param error The error value used to determining the scale of the perturbation
 	 * @return The updated value modified by the error
 	 * 
 	 * @date Created: Aug 9, 2019
@@ -45,7 +45,7 @@ public class PropagateObject {
 	 * @param o The original orbit
 	 * @param errorMatrix The full error matrix
 	 * 
-	 * @return A new Orbit object with values pertrubed by the values in the error matrix
+	 * @return A new Orbit object with values perturbed by the values in the error matrix
 	 * 
 	 * @date Created: Aug 9, 2019
 	 * @date Modified: Aug 9, 2019
