@@ -45,6 +45,16 @@ class OrbitTest {
 	void tearDown() throws Exception {
 	}
 
+	/**
+	 * @brief Default construction test
+	 * 
+	 * Tests that the default constructor properly creates an orbit object set
+	 * to Jan 1, 2001, the position of the sun (origin) and no velocity
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
 	@Test
 	void testDefaultConstruction() {
 		Orbit o = new Orbit();
@@ -57,6 +67,17 @@ class OrbitTest {
 		assert(o.getVz() == 0);
 	}
 
+	/**
+	 * @brief Parametrized construction test
+	 * 
+	 * Tests that the paremeterized constructor properly the orbit object with
+	 * the orbit epoch and state vector set the to values passed in via the
+	 * parameter list
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
 	@Test
 	void testParametreConstuction() {		
 		Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
@@ -69,10 +90,20 @@ class OrbitTest {
 		assert(o.getVz() == -5);	
 	}
 	
+	/**
+	 * @brief Propagate the orbit a single second
+	 * 
+	 * Tests that the propagateOrbit() method works properly if asked to advance
+	 * a single second in time.
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
 	@Test
-	void testPropogateOrbit1() {
+	void testPropagateOrbit1() {
 		Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
-		o.propogateOrbit(1);
+		o.propagateOrbit(1);
 		assert(o.getX() == 1.49e11+10);
 		assert(o.getY() == 1e4+3e4);
 		assert(o.getZ() == 2e4-5);
