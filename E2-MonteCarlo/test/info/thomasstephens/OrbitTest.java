@@ -131,6 +131,14 @@ class OrbitTest {
 		assert (Math.abs(sma - 149786004444.35) < epsilon);
 	}
 	
+	@Test
+	void testCrossProduct() {
+		double a[] = {2,3,4};
+		double b[] = {5,6,7};
+		double c[] = Orbit.crossProduct(a,b);
+		assert (c[0]==-3 && c[1]==6 && c[2]==-3);
+	}
+	
 	/**
 	 * @brief Verify eccentricity calculation
 	 * 

@@ -132,6 +132,27 @@ public class Orbit {
 		return sma;
 	}
 	
+	/**
+	 * @brief compute the cross product of two vectors
+	 * 
+	 * This method computes the cross product of two vectors passed in as 3 element arrays
+	 * 
+	 * @param a The first vector as a three element array
+	 * @param b The second vector as a three element array
+	 * @return A 3 element array containing the resulting vector of the cross product
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
+	static double[] crossProduct (double a[], double b[]) {
+		double cross[] = new double[3];
+	    cross[0] = a[1]*b[2]-a[2]*b[1];
+	    cross[1] = a[2]*b[0]-a[0]*b[2];
+	    cross[2] = a[0]*b[1]-a[1]*b[0];    
+	    return cross;	    
+	}
+	
 	double getEccentricity() {
 		double e = 0;
 		//@TODO need to look up how to compute a cross product
