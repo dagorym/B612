@@ -80,7 +80,8 @@ public class PropagateObject {
 //		}
 		
 		// for now we'll just preset the initial conditions instead of reading it from a file
-		Orbit origOrbit = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
+//		Orbit origOrbit = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
+		Orbit origOrbit = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,1,1,1);
 		int nSims = 1000;  // set number of simulations to run
 		double errorMatrix[][] = new double[6][6];
 		for (int i = 0; i<6; i++) {
@@ -109,9 +110,11 @@ public class PropagateObject {
 		// We'll also sum up the semi-major axes and eccentricities as we go
 		double meanSMA = 0;
 		double meanE = 0;
+		System.out.println("Running "+nSims+" simulations");
 		for (int sim = 0; sim < nSims; sim ++) {
 			// Set initial conditions for this orbit selecting variation from error matrix values
 			Orbit o = getPerturbedOrbit(origOrbit,errorMatrix);
+//			Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
 			// run the orbit forward for the full duration
 			for (int time = 0; time < nSteps; time++) {
 				o.propagateOrbit(stepSize);
@@ -120,7 +123,8 @@ public class PropagateObject {
 			SMAList[sim]=o.getSemiMajorAxis();
 			meanSMA += SMAList[sim];
 			eList[sim]=o.getEccentricity();
-			meanE = eList[sim];
+			meanE += eList[sim];
+//			System.out.println(SMAList[sim]+ "  " + eList[sim]);
 		}
 		
 		// generate the statistics
@@ -135,11 +139,11 @@ public class PropagateObject {
 			stdSMA += (SMAList[i] - meanSMA) * (SMAList[i] - meanSMA);
 			stdE += (eList[i] - meanE) * (eList[i] - meanE);
 		}
-		System.out.println(stdSMA);
-		System.out.println(stdE);
+//		System.out.println(stdSMA);
+//		System.out.println(stdE);
 		
-		stdSMA = Math.sqrt(stdSMA/(nSims-1));
-		stdE = Math.sqrt(stdE/(nSims-1));
+		stdSMA = Math.sqrt(stdSMA/nSims);
+		stdE = Math.sqrt(stdE/nSims);
 		
 		System.out.println("Semi-major Axis: " + meanSMA + " +/- " + stdSMA);
 		System.out.println("Eccentricity: " + meanE + " +/- " + stdE);
