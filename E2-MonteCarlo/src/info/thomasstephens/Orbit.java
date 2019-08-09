@@ -7,7 +7,9 @@ package info.thomasstephens;
  * @brief Class to hold orbital data
  * 
  * This class stores the orbital data for a single orbit (epoch and state vector)
- * and has the logic to propagate the orbit over a single timestep.
+ * and has the logic to propagate the orbit over a single time step.  It also provides
+ * the logic to get the semi-major axis and eccentricity based on the current orbital
+ * state.
  * 
  * @todo Just using arrays for the position and velocity data.  In production code,
  * this should probably be made to use some sort of tuple or vector object.  
@@ -18,6 +20,9 @@ package info.thomasstephens;
  * @author Tom Stephens
  */
 public class Orbit {
+	
+	static double MSUN = 2e30;
+	static double G = 6.67e-11;
 
 	private String epoch;
 	private	double pos[];
@@ -99,6 +104,32 @@ public class Orbit {
 		for (int i = 0; i < 3; i++) {
 			pos[i] += ts*vel[i];
 		}
+	}
+	
+	/**
+	 * @brief Returns the semi-major axis of the orbit in meters
+	 * 
+	 * This method computes the semi-major axis of the orbit based on the current
+	 * orbital state vector.  It returns the value in meters
+	 * 
+	 * @return The semi-major axis of the orbit in meters
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
+	double getSemiMajorAxis() {
+		double mu = G * MSUN;
+		double v2 = 0;
+		double r2 = 0;
+		for (int i =0; i<3; i++) {
+			r2 += pos[i]*pos[i];
+			v2 += vel[i]*vel[i];
+		}
+		double r = Math.sqrt(r2);
+		double epsilon = (v2/2)-(mu/r);
+		double sma = -0.5*mu/epsilon;
+		return sma;
 	}
 	
 	/// Return the current epoch of the orbit
