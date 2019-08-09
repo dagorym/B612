@@ -132,6 +132,12 @@ public class Orbit {
 		return sma;
 	}
 	
+	double getEccentricity() {
+		double e = 0;
+		//@TODO need to look up how to compute a cross product
+		return e;
+	}
+	
 	/// Return the current epoch of the orbit
 	String getDate() { return epoch; }
 	/// Return the orbit's X coordinate
