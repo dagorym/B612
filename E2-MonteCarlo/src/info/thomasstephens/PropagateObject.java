@@ -10,11 +10,47 @@ package info.thomasstephens;
  */
 public class PropagateObject {
 	
+	/**
+	 * @brief Apply initial orbit perturbation based on error matrix
+	 * 
+	 * This method pertrubes the passed in value based on the passed in error.
+	 * Currently, it simply picks a random value between +error and -error and
+	 * adds that to the value which it then returns
+	 * 
+	 * @todo Change the selection to pick from a range assuming that the passed
+	 * in error is the std deviation of a normal distribution
+	 * 
+	 * @param value The value to be modified
+	 * @param error The error value used to determing the scale of the perturbation
+	 * @return The updated value modified by the error
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
 	static double getPerturbation(double value, double error) {
 		double var = Math.random()*2-1.0;
 		return value * var;
 	}
 
+	/**
+	 * @brief Get an perturbed orbit based on the error matrix
+	 * 
+	 * This method returns a new orbit that has been slightly perturbed from
+	 * the original based on the supplied error matrix.  Each element of the
+	 * orbit is modified using the getPerturbation() method.
+	 * 
+	 * Currently this method just used the diagonal elements of the error matrix.
+	 * 
+	 * @param o The original orbit
+	 * @param errorMatrix The full error matrix
+	 * 
+	 * @return A new Orbit object with values pertrubed by the values in the error matrix
+	 * 
+	 * @date Created: Aug 9, 2019
+	 * @date Modified: Aug 9, 2019
+	 * @author Tom Stephens
+	 */
 	static Orbit getPerturbedOrbit(Orbit o, double errorMatrix[][]) {
 		double x = getPerturbation(o.getX(),errorMatrix[0][0]);
 		double y = getPerturbation(o.getY(),errorMatrix[1][1]);
