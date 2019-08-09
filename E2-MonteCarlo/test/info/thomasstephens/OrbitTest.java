@@ -128,7 +128,7 @@ class OrbitTest {
 		Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
 		double sma = o.getSemiMajorAxis();
 		double epsilon = 0.1;
-		assert ((sma - 149786004444.35) < epsilon);
+		assert (Math.abs(sma - 149786004444.35) < epsilon);
 	}
 	
 	/**
@@ -146,6 +146,6 @@ class OrbitTest {
 		Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
 		double e = o.getEccentricity();
 		double epsilon = 0.0001;
-		assert ((e-1) < epsilon);
+		assert (Math.abs(e-1) < epsilon);
 	}
 }
