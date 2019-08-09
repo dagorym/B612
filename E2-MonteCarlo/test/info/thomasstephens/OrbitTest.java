@@ -46,8 +46,15 @@ class OrbitTest {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testDefaultCreation() {
+		Orbit o = new Orbit();
+		assert(o.getDate() == "2001-01-01T00:00:00");
+		assert(o.getX() == 0);
+		assert(o.getY() == 0);
+		assert(o.getZ() == 0);
+		assert(o.getVx() == 0);
+		assert(o.getVy() == 0);
+		assert(o.getVz() == 0);
 	}
 
 }
