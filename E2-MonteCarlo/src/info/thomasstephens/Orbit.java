@@ -24,6 +24,18 @@ public class Orbit {
 		vel[1]=0;
 		vel[2]=0;
 	}
+	Orbit(String e, double x, double y, double z, double vx, double vy, double vz){
+		epoch=e;
+		pos = new double[3];
+		vel = new double[3];
+		pos[0]=x;
+		pos[1]=y;
+		pos[2]=z;
+		vel[0]=vx;
+		vel[1]=vy;
+		vel[2]=vz;
+
+	}
 	
 	String getDate() { return epoch; }
 	double getX() { return pos[0]; }
