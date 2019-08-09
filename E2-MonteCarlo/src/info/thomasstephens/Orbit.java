@@ -154,8 +154,10 @@ public class Orbit {
 	}
 	
 	double getEccentricity() {
-		double e = 0;
-		//@TODO need to look up how to compute a cross product
+		double h[] = crossProduct(pos,vel);
+		double h2 = h[0]*h[0]+h[1]*h[1]+h[2]*h[2];
+		double a = getSemiMajorAxis();
+		double e = Math.sqrt(1-h2/(G*MSUN*a));
 		return e;
 	}
 	

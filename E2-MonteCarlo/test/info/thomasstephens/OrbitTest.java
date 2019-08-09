@@ -153,7 +153,8 @@ class OrbitTest {
 	void testEccentricity(){
 		Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
 		double e = o.getEccentricity();
-		double epsilon = 0.0001;
-		assert (Math.abs(e-1) < epsilon);
+		double target = 0.005258;
+		double epsilon = 0.000001;
+		assert (Math.abs(e-target) < epsilon);
 	}
 }
