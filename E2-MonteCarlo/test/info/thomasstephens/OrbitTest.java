@@ -66,8 +66,19 @@ class OrbitTest {
 		assert(o.getZ() == 2e4);
 		assert(o.getVx() == 10);
 		assert(o.getVy() == 3e4);
-		assert(o.getVz() == -5);
+		assert(o.getVz() == -5);	
+	}
+	
+	@Test
+	void testPropogateOrbit1() {
+		Orbit o = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
+		o.propogateOrbit(1);
+		assert(o.getX() == 1.49e11+10);
+		assert(o.getY() == 1e4+3e4);
+		assert(o.getZ() == 2e4-5);
+		assert(o.getVx() == 10);
+		assert(o.getVy() == 3e4);
+		assert(o.getVz() == -5);	
 
-		
 	}
 }

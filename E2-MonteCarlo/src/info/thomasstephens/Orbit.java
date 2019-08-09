@@ -24,6 +24,7 @@ public class Orbit {
 		vel[1]=0;
 		vel[2]=0;
 	}
+	
 	Orbit(String e, double x, double y, double z, double vx, double vy, double vz){
 		epoch=e;
 		pos = new double[3];
@@ -34,7 +35,12 @@ public class Orbit {
 		vel[0]=vx;
 		vel[1]=vy;
 		vel[2]=vz;
-
+	}
+	
+	void propogateOrbit (double ts) {
+		for (int i = 0; i < 3; i++) {
+			pos[i] += ts*vel[i];
+		}
 	}
 	
 	String getDate() { return epoch; }
