@@ -23,7 +23,7 @@ public class WordListGenerator {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Welcome to the word list generator.");
+//		System.out.println("Welcome to the word list generator.");
 		/*
 		 * Read in the input file.  Given more time, this should be implemented
 		 * as a Parameter class that can parse the file with keywords and store
@@ -39,7 +39,7 @@ public class WordListGenerator {
 		 *  - rest of file - text string to process if line 5 contains NONE,
 		 *             otherwise empty
 		 */
-		System.out.println("Reading input file: " + args[0]);
+//		System.out.println("Reading input file: " + args[0]);
 		File file = new File(args[0]); 
 		BufferedReader br;
 		String dropListFile = null;
@@ -52,28 +52,28 @@ public class WordListGenerator {
 			br = new BufferedReader(new FileReader(file));
 			// read orbit state vector
 			dropListFile = br.readLine();
-			System.out.println(dropListFile);
+//			System.out.println(dropListFile);
 			ordering = br.readLine();
-			System.out.println(ordering);
+//			System.out.println(ordering);
 			String limits = br.readLine();
 			String vals[] = limits.split(" ");
 			frequencyLimits[0]=Integer.parseInt(vals[0]);
 			frequencyLimits[1]=Integer.parseInt(vals[1]);
-			System.out.println(frequencyLimits[0] + " " + frequencyLimits[1]);
+//			System.out.println(frequencyLimits[0] + " " + frequencyLimits[1]);
 			wordFilter = br.readLine();
-			System.out.println(wordFilter);
+//			System.out.println(wordFilter);
 			dataFile = br.readLine();
-			System.out.println(dataFile);
+//			System.out.println(dataFile);
 			if (dataFile.equals("NONE")) {
-				System.out.println("Reading in data to parse");
+//				System.out.println("Reading in data to parse");
 				String line = br.readLine();
 				while (line != null) {
 					dataText.add(line);
 					line = br.readLine();
 				}
-				for (String temp : dataText) {
-					System.out.println(temp);
-				}
+//				for (String temp : dataText) {
+//					System.out.println(temp);
+//				}
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -85,17 +85,16 @@ public class WordListGenerator {
 		// Read in the droplist if specified
 		DropList dl = null;
 		if (!(dropListFile.equals("NONE"))){
-			System.out.println("Reading in drop list");
+//			System.out.println("Reading in drop list");
 			dl = new DropList(dropListFile);
-			System.out.println(dl.printList());
+//			System.out.println(dl.printList());
 		}
 		
+		// create word list from input parameters
 		WordList wl = new WordList(dataFile,dl);
-//		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],wordFilter));
-//		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],"th"));
-//		System.out.println(wl.print(ordering,2,frequencyLimits[1],wordFilter));
-		System.out.println(wl.print("alphabetical",frequencyLimits[0],frequencyLimits[1],wordFilter));
-
+		// print out word cloud data based on filters
+		// @todo This should probably print out to a file
+		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],wordFilter));
 
 	}
 
