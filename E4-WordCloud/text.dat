@@ -1,0 +1,6 @@
+This is a test of the text parser
+to see if it pulls in multiple lines
+of text, extracts the words,
+and properly creates a small
+word cloud from them.  It should ignore
+punctuation and whitespace.

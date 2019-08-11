@@ -7,10 +7,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Object to store all the words and their values for the
@@ -129,6 +133,41 @@ public class WordList {
 			processLine(line,dl);
 		}
 	}
+	
+	String print(String order, int low, int high, String filter){
+		String out = "";
+		if (order.equals("frequency")) {
+			out = printByFrequency(low,high,filter);
+		}
+		return out;
+	}
+	
+	String printByFrequency(int low, int high, String filter) {
+		String out = "";
+		TreeSet<Integer> vList = new TreeSet<>();
+		vList.addAll(m_words.values());
+		Iterator<Integer> itr = vList.descendingIterator();
+		Set<String> keys = m_words.keySet();
+		while (itr.hasNext()) {
+			Integer value = itr.next();
+			Iterator<String> kItr = keys.iterator();
+			List<String> keysToRemove = new ArrayList<String>();
+			while (kItr.hasNext()) {
+				String key = kItr.next();
+				if (value == m_words.get(key)) {
+					out += key+", "+ value + "\n";
+					keysToRemove.add(key);
+				}
+			}
+			Iterator<String> lItr = keysToRemove.iterator();
+			while (lItr.hasNext()) {
+				keys.remove(lItr.next());
+			}
+		}
+
+		return out;
+	}
+	
 	
 	
 	// return the size of the word cloud

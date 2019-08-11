@@ -90,6 +90,8 @@ public class WordListGenerator {
 			System.out.println(dl.printList());
 		}
 		
+		WordList wl = new WordList(dataFile,dl);
+		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],wordFilter));
 
 
 	}
