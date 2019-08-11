@@ -91,7 +91,8 @@ public class WordListGenerator {
 		}
 		
 		WordList wl = new WordList(dataFile,dl);
-		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],wordFilter));
+//		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],wordFilter));
+		System.out.println(wl.print(ordering,frequencyLimits[0],frequencyLimits[1],"th"));
 //		System.out.println(wl.print(ordering,2,frequencyLimits[1],wordFilter));
 
 
