@@ -135,6 +135,32 @@ public class WordList {
 		}
 	}
 	
+	/**
+	 * @brief Wrapper method for printing the output
+	 * 
+	 * This method takes four arguments, the ordering method, the
+	 * lower and upper limits on the word frequencies to print, and
+	 * a filter for the first letters of the words to print out.
+	 * 
+	 * The options for these parameters are:
+	 *  - order - either "frequency" or "alphabetical"
+	 *  - lower and upper limits - value to limit on (inclusive) or -1 for no limit
+	 *  - word filter - word fragment to filter on (start of word only) or '*' for no filtering
+	 *  
+	 *  The word list with frequencies are printing to the screen
+	 *  
+	 *  @todo this should be enhanced to write to a user specified output file
+	 *  
+	 * @param order the filtering order - frequency or alphabetical
+	 * @param low the lowest frequency to print out, -1 for no limit
+	 * @param high the highest frequency to print out, -1 for no limit
+	 * @param filter a word filter (beginning of word) or * for no cut 
+	 * @return a string containing the list of words and their frequency
+	 * 
+	 * @date Created: Aug 10, 2019
+	 * @date Modified: Aug 10, 2019
+	 * @author Tom Stephens
+	 */
 	String print(String order, int low, int high, String filter){
 		String out = "";
 		filter=filter.toLowerCase();
@@ -144,13 +170,42 @@ public class WordList {
 		return out;
 	}
 	
+	/**
+	 * @brief Method for printing the output with frequency ordering
+	 * 
+	 * This method takes three arguments, the
+	 * lower and upper limits on the word frequencies to print, and
+	 * a filter for the first letters of the words to print out.
+	 * 
+	 * The options for these parameters are:
+	 *  - lower and upper limits - value to limit on (inclusive) or -1 for no limit
+	 *  - word filter - word fragment to filter on (start of word only) or '*' for no filtering
+	 * 
+	 *  The method loops over the values, sorted from lowest to highest, adds the
+	 *  keys that match this value to the list.  If a word filter is provided, the
+	 *  list of possible keys is first filtered to remove all those that don't match.
+	 *  If frequency filters are applied, the algorithm skips any frequencies that fall
+	 *  outside the range.
+	 *  
+	 *  @todo This is a fairly brute force, O(n^2) algorithm.  If performance became an issue,
+	 *  we could look for a faster implementation
+	 *  
+	 * @param low the lowest frequency to print out, -1 for no limit
+	 * @param high the highest frequency to print out, -1 for no limit
+	 * @param filter a word filter (beginning of word) or * for no cut 
+	 * @return a string containing the list of words and their frequency
+	 * 
+	 * @date Created: Aug 10, 2019
+	 * @date Modified: Aug 10, 2019
+	 * @author Tom Stephens
+	 */
 	String printByFrequency(int low, int high, String filter) {
 		String out = "";
 		TreeSet<Integer> vList = new TreeSet<>();
 		vList.addAll(m_words.values());
 		Iterator<Integer> itr = vList.descendingIterator();
 		Set<String> keys = null;
-		if (filter.equals("NONE")) {
+		if (filter.equals("*")) {
 			keys = m_words.keySet();
 		} else {
 			//We'll do the word filtering by simply removing the keys we need to check against
@@ -163,7 +218,6 @@ public class WordList {
 					keys.add(key);
 				}
 			}
-			
 		}
 		while (itr.hasNext()) {
 			Integer value = itr.next();
@@ -184,7 +238,6 @@ public class WordList {
 			}
 			if (keys.size() == 0) break;  // we don't have any keys left to check so we're done
 		}
-
 		return out;
 	}
 	
