@@ -1,0 +1,8 @@
+NONE
+frequency
+-1 -1
+*
+text.dat
+this is a test of the parser
+to see if it pulls in multiple lines
+of text and prints them out
