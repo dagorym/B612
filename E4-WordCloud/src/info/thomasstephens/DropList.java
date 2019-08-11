@@ -82,8 +82,14 @@ public class DropList {
 		return data;
 	}
 	
+	/// return the size of the drop list
 	int size() {
 		return m_list.size();
+	}
+	
+	/// check if the list contains the specified word
+	boolean contains(String s) {
+		return m_list.contains(s);
 	}
 	
 }

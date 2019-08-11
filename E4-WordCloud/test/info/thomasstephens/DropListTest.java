@@ -37,4 +37,22 @@ class DropListTest {
 		assert (out.equals("but, or, in, and, of, for, is"));
 	}
 
+	/**
+	 * Test the that the drop list contains all the expected contents
+	 * 
+	 * @date Created: Aug 10, 2019
+	 * @date Modified: Aug 10, 2019
+	 * @author Tom Stephens
+	 */
+	@Test
+	void testContains() {
+		DropList dl = new DropList("droplist.txt");
+		assert(dl.contains("and") == true);
+		assert(dl.contains("of") == true);
+		assert(dl.contains("for") == true);
+		assert(dl.contains("in") == true);
+		assert(dl.contains("is") == true);
+		assert(dl.contains("but") == true);
+		assert(dl.contains("or") == true);
+	}
 }
