@@ -150,6 +150,8 @@ public class WordList {
 		Set<String> keys = m_words.keySet();
 		while (itr.hasNext()) {
 			Integer value = itr.next();
+			if (high != -1 && value > high) continue;  // skip if we're above the upper frequency limit
+			if (value < low) break;      // if we drop below the lower limit we're done
 			Iterator<String> kItr = keys.iterator();
 			List<String> keysToRemove = new ArrayList<String>();
 			while (kItr.hasNext()) {

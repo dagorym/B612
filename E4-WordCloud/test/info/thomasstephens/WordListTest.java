@@ -45,4 +45,24 @@ class WordListTest {
 		assert(fragment.equals("text, 2\na, 2\nit, 2\nthe, 2\nsmall, 1\nproperly, 1"));
 
 	}
+	
+	@Test
+	void testPrintByFrequencyWithLowLimit() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printByFrequency(2, -1, "NONE");
+		assert(out.equals("text, 2\na, 2\nit, 2\nthe, 2\n"));
+
+
+	}
+	@Test
+	void testPrintByFrequencyWithHighLimit() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printByFrequency(-1, 1, "NONE");
+		String fragment = out.substring(0,36);
+		assert(fragment.equals("small, 1\nproperly, 1\ncloud, 1\nsee, 1"));
+
+
+	}
 }
