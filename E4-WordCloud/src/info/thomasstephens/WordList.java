@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,6 +37,37 @@ public class WordList {
 	WordList(){
 		m_words = new HashMap();
 	}
+	
+	/**
+	 * @brief Process a single line of text
+	 * 
+	 * This method take a single line of text, removes all punctuation,
+	 * converts everything to lower case, splits the line into individual
+	 * words, and adds all words not in the drop list to the full word cloud
+	 * list.
+	 * 
+	 * @param line The string of words to process
+	 * @param dl The drop list to check against
+	 * 
+	 * @date Created: Aug 10, 2019
+	 * @date Modified: Aug 10, 2019
+	 * @author Tom Stephens
+	 */
+	void processLine(String line,DropList dl) {
+		// convert text to lower case, remove punctuation, and break the line individual words
+		String[] words = line.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+		for (int i = 0; i < words.length; i++) {
+			// check against drop list
+			if (!dl.contains(words[i])){  // only add if not in drop list
+				String k = words[i];
+				if (m_words.containsKey(k)) { // add one to word count if already there
+					m_words.replace(k, m_words.get(k)+1);
+				} else {  // or create a new entry
+					m_words.put(k, 1);
+				}
+			}
+		}
+	}
 
 	/**
 	 * @brief Constructor creates list by parsing passed in file name
@@ -59,19 +92,7 @@ public class WordList {
 			// Read a line of text
 			String line = br.readLine();
 			while (line != null) {
-				// convert text to lower case, remove punctuation, and break the line individual words
-				String[] words = line.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
-				for (int i = 0; i < words.length; i++) {
-					// check against drop list
-					if (!dl.contains(words[i])){  // only add if not in drop list
-						String k = words[i];
-						if (m_words.containsKey(k)) { // add one to word count if already there
-							m_words.replace(k, m_words.get(k)+1);
-						} else {  // or create a new entry
-							m_words.put(k, 1);
-						}
-					}
-				}
+				processLine(line,dl);
 				// read in the next line
 				line = br.readLine();
 			}
@@ -81,9 +102,33 @@ public class WordList {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
+	/**
+	 * @brief Constructor creates list by parsing the passed List<String>
+	 * 
+	 * This constructor takes the list of strings and the DropList object
+	 * The list is processed one string at a time, extracting the words in each
+	 * string and if the word is not in the drop list
+	 * it is added to the word count
+	 * 
+	 * @param data The input List<String> containing the words to process
+	 * @param dl The DropList object containing the words to ignore
+	 * 
+	 * @date Created: Aug 10, 2019
+	 * @date Modified: Aug 10, 2019
+	 * @author Tom Stephens
+	 */
+	WordList(List<String> data, DropList dl){
+		m_words = new HashMap();
+
+		// iterate over the list
+		Iterator<String> itr = data.iterator();
+		while (itr.hasNext()) {
+			String line = itr.next();
+			processLine(line,dl);
+		}
+	}
 	
 	
 	// return the size of the word cloud
