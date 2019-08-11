@@ -74,14 +74,22 @@ public class WordListGenerator {
 				for (String temp : dataText) {
 					System.out.println(temp);
 				}
-		 
 			}
-			
+			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		// Read in the droplist if specified
+		DropList dl = null;
+		if (!(dropListFile.equals("NONE"))){
+			System.out.println("Reading in drop list");
+			dl = new DropList(dropListFile);
+			System.out.println(dl.printList());
+		}
+		
 
 
 	}
