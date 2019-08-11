@@ -36,4 +36,13 @@ class WordListTest {
 		assert (wl.count("parser") == 1);
 	}
 
+	@Test
+	void testPrintByFrequencyNoFilters() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printByFrequency(-1, -1, "NONE");
+		String fragment = out.substring(0,46);
+		assert(fragment.equals("text, 2\na, 2\nit, 2\nthe, 2\nsmall, 1\nproperly, 1"));
+
+	}
 }
