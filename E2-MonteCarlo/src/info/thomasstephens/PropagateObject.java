@@ -3,6 +3,11 @@
  */
 package info.thomasstephens;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * @author Tom
@@ -68,22 +73,46 @@ public class PropagateObject {
 	public static void main(String[] args) {
 		System.out.println("Welcome to the orbit propagator.");
 		// Open and read the input file
-//		try(FileInputStream fin = new FileInputStream(args[0])) {
-//			String line = "";
-//			do {
-//				// @TODO Need to figure out how to read from files
-//			} while (line != "STOP");
-//		} catch(FileNotFoundException e) {
-//			System.out.println("File Not Found.");
-//		} catch(IOException e) {
-//			System.out.println("An I/O Error Occurred");
-//		}
-		
+		System.out.println("Reading input file: " + args[0]);
+		File file = new File(args[0]); 
+		BufferedReader br;
+		Orbit origOrbit = new Orbit();
+		double errorMatrix[][] = new double[6][6];
+		int nSims = 1000;  // set number of simulations to run
+		try {
+			br = new BufferedReader(new FileReader(file));
+			// read orbit state vector
+			String st=br.readLine(); 
+			String vals[] = st.split(" ");
+			origOrbit = new Orbit(vals[0],       // epoch
+					Double.parseDouble(vals[1]), // X
+					Double.parseDouble(vals[2]), // Y
+					Double.parseDouble(vals[3]), // Z
+					Double.parseDouble(vals[4]), // Vx
+					Double.parseDouble(vals[5]), // Vy
+					Double.parseDouble(vals[6])  // Vz
+					);
+			// read in error matrix
+			for (int i = 0; i<6; i++) {
+				st = br.readLine();
+				vals = st.split(" ");
+				for (int j = 0; j<6; j++) {
+					errorMatrix[i][j] = Double.parseDouble(vals[j]);
+				}
+			}
+			// Read in number of simulations to run
+			st = br.readLine();
+			nSims = Integer.parseInt(st);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+ 
 		// for now we'll just preset the initial conditions instead of reading it from a file
 //		Orbit origOrbit = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,10,30e3,-5);
-		Orbit origOrbit = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,1,1,1);
-		int nSims = 1000;  // set number of simulations to run
-		double errorMatrix[][] = new double[6][6];
+//		Orbit origOrbit = new Orbit("2019-09-10T12:00:00",149e9,1e4,2e4,1,1,1);
 		for (int i = 0; i<6; i++) {
 			for (int j = 0; j<6; j++) {
 				if (i == j) {
