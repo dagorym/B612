@@ -86,5 +86,55 @@ class WordListTest {
 		assert(out.equals("the, 2\nthem, 1\n"));
 	}
 
+	@Test
+	void testPrintAlphabeticallyNoFilters() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printAlphabetically(-1, -1, "*");
+		String fragment = out.substring(0,46);
+		assert(fragment.equals("a, 2\ncloud, 1\ncreates, 1\nextracts, 1\nfrom, 1\ni"));
+	}
+	
+	@Test
+	void testPrintAlphabeticallyWithLowLimit() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printAlphabetically(2, -1, "*");
+		assert(out.equals("a, 2\nit, 2\ntext, 2\nthe, 2\n"));
+	}
+	
+		@Test
+	void testPrintAlphabeticallyWithHighLimit() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printAlphabetically(-1, 1, "*");
+		String fragment = out.substring(0,46);
+		assert(fragment.equals("cloud, 1\ncreates, 1\nextracts, 1\nfrom, 1\nif, 1\n"));
+	}
+	
+	@Test
+	void testPrintAlphabeticallyWithWordFilter1() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printAlphabetically(-1, -1, "t");
+		assert(out.equals("test, 1\ntext, 2\nthe, 2\nthem, 1\nthis, 1\nto, 1\n"));
+	}
+	
+	@Test
+	void testPrintAlphabeticallyWithWordFilter2() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printAlphabetically(-1, -1, "th");
+		assert(out.equals("the, 2\nthem, 1\nthis, 1\n"));
+	}
+	
+	@Test
+	void testPrintAlphabeticallyWithWordFilter3() {
+		DropList dl = new DropList("droplist.txt");
+		WordList wl = new WordList("testtext.dat",dl);
+		String out = wl.printAlphabetically(-1, -1, "the");
+		assert(out.equals("the, 2\nthem, 1\n"));
+	}
+
 
 }

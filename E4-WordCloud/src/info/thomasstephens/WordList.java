@@ -166,6 +166,8 @@ public class WordList {
 		filter=filter.toLowerCase();
 		if (order.equals("frequency")) {
 			out = printByFrequency(low,high,filter);
+		} else {
+			out = printAlphabetically(low,high,filter);
 		}
 		return out;
 	}
@@ -204,21 +206,7 @@ public class WordList {
 		TreeSet<Integer> vList = new TreeSet<>();
 		vList.addAll(m_words.values());
 		Iterator<Integer> itr = vList.descendingIterator();
-		Set<String> keys = null;
-		if (filter.equals("*")) {
-			keys = m_words.keySet();
-		} else {
-			//We'll do the word filtering by simply removing the keys we need to check against
-			Set<String> keyList = m_words.keySet();
-			keys = new HashSet<String>();
-			Iterator<String> kItr = keyList.iterator();
-			while (kItr.hasNext()) {
-				String key = kItr.next();
-				if (key.length()>=filter.length() && key.substring(0,filter.length()).equals(filter)) {
-					keys.add(key);
-				}
-			}
-		}
+		Set<String> keys = getKeysList(filter);
 		while (itr.hasNext()) {
 			Integer value = itr.next();
 			if (high != -1 && value > high) continue;  // skip if we're above the upper frequency limit
@@ -237,6 +225,45 @@ public class WordList {
 				keys.remove(lItr.next());
 			}
 			if (keys.size() == 0) break;  // we don't have any keys left to check so we're done
+		}
+		return out;
+	}
+	
+	private Set<String> getKeysList(String filter){
+		Set<String> keys = null;
+		if (filter.equals("*")) {
+			keys = m_words.keySet();
+		} else {
+			//We'll do the word filtering by simply removing the keys we need to check against
+			Set<String> keyList = m_words.keySet();
+			keys = new HashSet<String>();
+			Iterator<String> kItr = keyList.iterator();
+			while (kItr.hasNext()) {
+				String key = kItr.next();
+				if (key.length()>=filter.length() && key.substring(0,filter.length()).equals(filter)) {
+					keys.add(key);
+				}
+			}
+		}
+		return keys;
+
+	}
+	
+	String printAlphabetically(int low, int high, String filter) {
+		String out = "";
+		// Get list of keys and remove any that don't match filter
+		TreeSet<String> keys = new TreeSet<String>();
+		keys.addAll(getKeysList(filter)); // this alphabetizes the resulting set
+		//loop over the keys and print them out observing frequency filters
+		Iterator<String> kItr = keys.iterator();
+		while (kItr.hasNext()) {
+			String key = kItr.next();
+			int value = m_words.get(key);
+			if (value >= low) {  // check for low limit
+				if (high == -1 || value <= high) {  // check for high limit
+					out += key + ", " + value + "\n";
+				}
+			}
 		}
 		return out;
 	}
